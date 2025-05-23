@@ -289,8 +289,8 @@ export default function Portfolio() {
             tags={["Next.js", "Framer Motion", "Tailwind CSS","Nodemailer","React Hook Form","Cloudinary " ]}
             image="/port.png"
             delay={0.2}
-            projectUrl="https://example.com/project2"
-            githubUrl="https://github.com/yourusername/project2"
+            projectUrl="https://portfolio-ecru-seven-38.vercel.app/"
+            githubUrl="https://github.com/RohitK1865/portfolio"
           />
           <ProjectCard
             title="Notes making App"
