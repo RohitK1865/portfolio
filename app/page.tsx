@@ -192,15 +192,13 @@ export default function Portfolio() {
 
       {/* About Section */}
       <Section id="about" title="About Me" icon={<User className="w-6 h-6" />}>
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <motion.div variants={fadeInVariants} className="relative h-[600px] w-full">
-  <div className="absolute inset-0 translate-x-6 translate-y-6 border-4 border-[#D4A373] rounded-lg -z-10" />
-  <div className="relative h-full w-full overflow-hidden rounded-lg">
-    <Image src="/me.jpeg" alt="Profile" fill className="object-cover" priority />
-  </div>
-</motion.div>
-
-
+        <div className="relative grid md:grid-cols-2 gap-12 items-center z-10">
+        <motion.div variants={fadeInVariants} className="relative h-[600px] w-full">
+          <div className="absolute inset-0 translate-x-6 translate-y-6 border-4 border-[#D4A373] rounded-lg -z-10" />
+          <div className="relative h-full w-full overflow-hidden rounded-lg">
+            <Image src="/me.jpeg" alt="Profile" fill className="object-cover" priority />
+          </div>
+        </motion.div>
           <motion.div variants={fadeInVariants}>
             <h3 className="text-2xl font-bold text-[#D4A373] mb-4">Who I Am</h3>
             <p className="text-[#D4A373]/80 mb-6">
@@ -220,7 +218,6 @@ export default function Portfolio() {
           </motion.div>
         </div>
       </Section>
-
       {/* Skills Section */}
       <Section id="skills" title="My Skills" icon={<Code className="w-6 h-6" />} className="bg-[#E9EDC9]">
   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
