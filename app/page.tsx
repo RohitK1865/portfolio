@@ -7,10 +7,44 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { useToast } from "@/components/ui/use-toast"
 import { useForm } from "react-hook-form"
+// Import Lenis
+import Lenis from "@studio-freight/lenis"
 
 export default function Portfolio() {
   const { toast } = useToast()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const lenisRef = useRef(null)
+
+  // Initialize Lenis smooth scrolling
+  useEffect(() => {
+    // Initialize Lenis
+    const lenis = new Lenis({
+      duration: 1.2, // Animation duration
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Custom easing
+      direction: 'vertical', // Scroll direction
+      gestureDirection: 'vertical', // Gesture direction
+      smooth: true, // Enable smooth scrolling
+      mouseMultiplier: 1, // Mouse wheel multiplier
+      smoothTouch: false, // Disable smooth scrolling on touch devices (better performance)
+      touchMultiplier: 2, // Touch multiplier
+      infinite: false, // Disable infinite scroll
+    })
+
+    // Store lenis instance in ref for cleanup and access
+    lenisRef.current = lenis
+
+    // Animation frame function for Lenis
+    function raf(time) {
+      lenis.raf(time)
+      requestAnimationFrame(raf)
+    }
+    requestAnimationFrame(raf)
+
+    // Cleanup function
+    return () => {
+      lenis.destroy()
+    }
+  }, [])
 
   // Close mobile menu when clicking outside
   useEffect(() => {
@@ -45,14 +79,19 @@ export default function Portfolio() {
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"])
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "200%"])
 
-  // Smooth scroll function for navigation
+  // Updated smooth scroll function for navigation using Lenis
   const scrollToSection = (sectionId) => {
     setMobileMenuOpen(false)
     const element = document.getElementById(sectionId)
-    if (element) {
+    if (element && lenisRef.current) {
+      // Use Lenis scrollTo method for smooth scrolling
       const yOffset = -80 // Header height offset
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset
-      window.scrollTo({ top: y, behavior: "smooth" })
+      const elementPosition = element.offsetTop + yOffset
+      
+      lenisRef.current.scrollTo(elementPosition, {
+        duration: 2, // Custom duration for navigation
+        easing: (t) => t * (2 - t), // Custom easing for navigation
+      })
     }
   }
 
@@ -68,8 +107,6 @@ export default function Portfolio() {
             className="text-[#D4A373] font-bold text-xl"
           >
             <span className="animate-colorChange">Hello, World!</span>
-
-
           </motion.div>
           <motion.nav
             initial={{ opacity: 0, x: 20 }}
@@ -218,6 +255,7 @@ export default function Portfolio() {
           </motion.div>
         </div>
       </Section>
+      
       {/* Skills Section */}
       <Section id="skills" title="My Skills" icon={<Code className="w-6 h-6" />} className="bg-[#E9EDC9]">
   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -248,7 +286,6 @@ export default function Portfolio() {
     />
   </div>
 </Section>
-
 
       {/* Projects Section */}
       <Section id="projects" title="Featured Projects" icon={<Briefcase className="w-6 h-6" />}>
@@ -343,6 +380,7 @@ export default function Portfolio() {
     />
         </div>
       </Section>
+      
       {/* Contact Section */}
       <Section id="contact" title="Get In Touch" icon={<Mail className="w-6 h-6" />} className="bg-[#CCD5AE]">
         <div className="grid md:grid-cols-2 gap-12">

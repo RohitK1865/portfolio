@@ -47,3 +47,85 @@ body {
     @apply border-border;
   }
 }
+/* Lenis Smooth Scrolling Optimizations */
+
+/* Ensure smooth scrolling performance */
+html {
+  scroll-behavior: auto;
+}
+
+/* Lenis will handle the smooth scrolling, so we disable browser's default */
+html.lenis {
+  height: auto;
+}
+
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* Optimize for mobile devices */
+@media (max-width: 768px) {
+  .lenis.lenis-smooth {
+    /* Reduce smooth scrolling on mobile for better performance */
+    scroll-behavior: auto;
+  }
+}
+
+/* Custom scrollbar styling to complement Lenis */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FEFAE0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D4A373;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #CCD5AE;
+}
+
+/* Prevent layout shift during Lenis initialization */
+body {
+  overflow-x: hidden;
+}
+
+/* Improve animation performance with Lenis */
+* {
+  will-change: auto;
+}
+
+/* Optimize elements that will be animated by Lenis */
+.lenis-section {
+  will-change: transform;
+}
+
+/* Ensure fixed elements work properly with Lenis */
+.fixed {
+  position: fixed !important;
+}
+
+/* Color animation keyframe for the "Hello, World!" text */
+@keyframes colorChange {
+  0% { color: #D4A373; }
+  25% { color: #CCD5AE; }
+  50% { color: #FAEDCD; }
+  75% { color: #E9EDC9; }
+  100% { color: #D4A373; }
+}
+
+.animate-colorChange {
+  animation: colorChange 4s ease-in-out infinite;
+}
